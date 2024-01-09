@@ -1,5 +1,5 @@
 function isAuthenticated(req, res, next) {
-  if (req.user) {
+  if (req.isAuthenticated()) {
     return next();
   }
 

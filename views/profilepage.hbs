@@ -1,0 +1,28 @@
+<h1>Profile {{user.username}} </h1>
+
+<form action="/posts/create" method="post">
+  <label for="title">title</label>
+  <input name="title" type="text" />
+  <label for="content">content</label>
+  <input name="content" type="text" />
+  <button type="submit">Create</button>
+</form>
+
+<p>username: {{user.username}}</p>
+<p>userId: {{user.id}}</p>
+<p>posts :</p>
+<div>
+  <ul>
+    {{#each posts}}
+      <li>
+        <a href="/posts/profile-page/{{this.postId}}">
+          {{this.title}}-{{this.content}}-{{this.published}}
+        </a>
+      </li>
+    {{/each}}
+  </ul>
+</div>
+
+<li><a href="/update/{{this.postId}}",> Edit </a></li>
+
+<a href="/logout">Logout</a>

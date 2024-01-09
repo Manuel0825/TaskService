@@ -34,7 +34,7 @@ const prisma = require("../prisma");
  *       500:
  *         description: Redirects to the registration page on error.
  */
-router.post("/register", async (req, res) => {
+router.post("/register-page", async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const newUser = await prisma.user.create({
@@ -43,10 +43,10 @@ router.post("/register", async (req, res) => {
         password: hashedPassword,
       },
     });
-    res.redirect("/auth/login-page");
+    res.redirect("/login-page");
   } catch (error) {
     console.log(error);
-    res.redirect("/auth/register-page");
+    res.redirect("/register-page");
   }
 });
 
@@ -79,10 +79,10 @@ router.post("/register", async (req, res) => {
  *         description: Redirects to the home page on success, login page on failure.
  */
 router.post(
-  "/login",
+  "/login-page",
   passport.authenticate("local", {
     successRedirect: "/",
-    failureRedirect: "/auth/login-page",
+    failureRedirect: "/login-page",
     failureFlash: true,
   })
 );
@@ -113,6 +113,28 @@ router.get("/login-page", (req, res) => {
  */
 router.get("/register-page", (req, res) => {
   res.render("register", { error: req.flash("error") });
+});
+
+/*router.get('/profile-page', (req, res) => {
+  // Check if the user is authenticated
+  if (req.isAuthenticated()) {
+    // Render the profile page and pass the user data to the template
+    res.render('profile', { user: req.user });
+  } else {
+    // Redirect to the login page if the user is not authenticated
+    res.redirect('/login-page');
+  }
+});*/
+
+
+
+router.get("/logout", (req, res) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 });
 
 module.exports = router;

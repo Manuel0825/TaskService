@@ -32,8 +32,9 @@ app.use(session({
 }));
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
+app.set('views', './views');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -67,5 +68,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 module.exports = app;
