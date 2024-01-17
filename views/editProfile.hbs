@@ -1,0 +1,16 @@
+<h1>Edit Profile</h1>
+
+<form action="/profile-page/edit/{{user.id}}?_method=PUT" method="post" enctype="multipart/form-data">
+  <label for="photo"><b>Photo:</b></label>
+  <input type="file" name="photo" value="{{user.photo}}">
+  <label for="username">
+    <b>Username:</b>
+    </label>
+<input type="text" name="username" placeholder="Username" value={{user.username}}>
+
+  
+
+  <button type="submit">Update Profile</button>
+</form>
+
+<a href="/profile-page">Back to Profile</a>

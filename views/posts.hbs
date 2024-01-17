@@ -2,7 +2,9 @@
 <p>This is the home page.</p>
 <div>
   {{#each posts}}
-    <li><a href="/posts/{{this.postId}}">{{this.title}} {{this.content}} {{this.published}} </li></a>
+    <li><a href="/post-page/{{this.postId}}">{{this.title}} {{this.content}} <img src="{{this.photo}}" alt="post-image"></a></li>
   {{/each}}
 </ul>
 </div>
+
+

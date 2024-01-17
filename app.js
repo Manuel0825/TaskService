@@ -8,6 +8,8 @@ const { create } = require('express-handlebars');
 const session = require('express-session');
 const methodOverride = require('method-override')
 const passport = require('passport');
+const isAuthenticated =require ('./middlewares/isAuthenticated');
+
 
 const swaggerDocs = require('./config/swagger').swaggerDocs;
 const swaggerUi = require('./config/swagger').swaggerUi;
@@ -21,7 +23,7 @@ const hbs = create({
 
 require('dotenv').config();
 
-const indexRouter = require('./routes/index');
+
 
 const app = express();
 
@@ -40,7 +42,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 app.use(flash());
 app.use(methodOverride('_method'));
 app.use(passport.initialize());
@@ -51,7 +53,16 @@ require('./config/cloudinary');
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
+
+
+
+
+
+const indexRouter = require('./routes/index');
+
+
 app.use('/', indexRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

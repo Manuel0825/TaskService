@@ -1,0 +1,9 @@
+<form action="/post-page/update/{{post.postId}}?_method=PUT" method="post" enctype="multipart/form-data">
+  <label for="title">Title</label>
+  <input name="title" type="text"  value= '{{post.title}}'/> 
+  <label for="content">content</label>
+  <input name="content" type="text" value= '{{post.content}}'/> 
+  <label for="photo"><b>Photo:</b></label>
+  <input type="file" name="photo" value="{{post.photo}}" />
+  <button type="submit">Update</button>
+</form>

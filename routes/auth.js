@@ -4,6 +4,8 @@ const router = express.Router();
 const passport = require("passport");
 const prisma = require("../prisma");
 
+const transporter = require ("../config/nodemailer")
+
 /**
  * @swagger
  * /auth/register:
@@ -43,10 +45,26 @@ router.post("/register-page", async (req, res) => {
         password: hashedPassword,
       },
     });
-    res.redirect("/login-page");
+    
+    let mailOptions = {
+      from: 'TercerProyecto',
+      to: req.body.email,
+      subject: 'Asunto del Email',
+      text: `Welcome ${newUser.username}`  // o puedes usar `html` para contenido HTML
+  };
+  
+  transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          console.log(error);
+      } else {
+          console.log('Correo enviado: ' + info.response);
+      }
+  });
+    
+  res.redirect("/auth/login-page");
   } catch (error) {
     console.log(error);
-    res.redirect("/register-page");
+    res.redirect("/auth/register-page");
   }
 });
 
@@ -81,7 +99,7 @@ router.post("/register-page", async (req, res) => {
 router.post(
   "/login-page",
   passport.authenticate("local", {
-    successRedirect: "/",
+    successRedirect: "/home-page",
     failureRedirect: "/login-page",
     failureFlash: true,
   })
@@ -115,16 +133,16 @@ router.get("/register-page", (req, res) => {
   res.render("register", { error: req.flash("error") });
 });
 
-/*router.get('/profile-page', (req, res) => {
+router.get('/profile-page', (req, res) => {
   // Check if the user is authenticated
   if (req.isAuthenticated()) {
     // Render the profile page and pass the user data to the template
-    res.render('profile', { user: req.user });
+    res.render('profilepage', { user: req.user });
   } else {
     // Redirect to the login page if the user is not authenticated
-    res.redirect('/login-page');
+    res.redirect('/auth/login-page');
   }
-});*/
+});
 
 
 
@@ -133,7 +151,7 @@ router.get("/logout", (req, res) => {
     if (err) {
       return next(err);
     }
-    res.redirect("/");
+    res.redirect("/auth/login-page");
   });
 });
 
