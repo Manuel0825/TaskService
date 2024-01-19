@@ -52,10 +52,10 @@ router.get("/edit/:id", async (req, res) => {
         id,
       },
     });
-    res.render("editprofile", {user: editProfile,});
+    res.render("editProfile", {user: editProfile,});
   } catch (error) {
     console.log(error)
-    res.render("editprofile", {user: editProfile,});
+    res.render("editProfile", {user: editProfile,});
   }
 });
 
