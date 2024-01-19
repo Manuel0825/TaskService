@@ -1,10 +1,21 @@
 <h1>Welcome to {{title}}</h1>
 <p>This is the home page.</p>
-<div>
+
+
+<form action="/post-page/filter" method="get">
+  <label for="category">Filter by Category:</label>
+  <input name="category" type="text" />
+  <button type="submit">Filter</button>
+</form>
+
+<div class="posts-container">
   {{#each posts}}
-    <li><a href="/post-page/{{this.postId}}">{{this.title}} {{this.content}} <img src="{{this.photo}}" alt="post-image"></a></li>
+    <li><a href="/post-page/{{this.postId}}">
+    <h2>{{this.title}}</h2> 
+    <img src="{{this.photo}}" alt="post-image"  style="max-width: 350px; max-height:200px">
+    <p>{{this.content}}</p>
+    <p>{{this.category}}</p>
+    </a></li>
   {{/each}}
 </ul>
 </div>
-
-

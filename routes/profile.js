@@ -8,12 +8,6 @@ const isAuthenticated = require("../middlewares/isAuthenticated");
 
 const multer = require("multer");
 
-/*router.get("/profile-page", async (req, res) => {
-  const user = await prisma.user.findMany();
-
-  res.render("profilepage", { title: "user", user: user });
-});*/
-
 router.get("/", isAuthenticated, async (req, res) => {
   const allPosts = await prisma.post.findMany({
     where: {
@@ -22,10 +16,31 @@ router.get("/", isAuthenticated, async (req, res) => {
   });
   console.log("All Posts:", allPosts);
   res.render("profilepage", {
-    title: "posts",
+    title: req.user.username,
     user: req.user,
     posts: allPosts,
   });
+});
+
+router.get('/view/:userId', async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
+
+    res.render('profileView', { title: `${user.username}'s Profile`, user });
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    res.status(500).send('Internal Server Error');
+  }
 });
 
 router.get("/edit/:id", async (req, res) => {
@@ -40,13 +55,14 @@ router.get("/edit/:id", async (req, res) => {
 
 router.put("/edit/:id", upload.single("photo"), async (req, res) => {
   try {
-    if (req.body.username) {
+    if (req.body.username || req.body.number) {
       await prisma.user.update({
         where: {
           id: req.user.id,
         },
         data: {
           username: req.body.username,
+          number: req.body.number,
         },
       });
     }
@@ -72,32 +88,6 @@ router.put("/edit/:id", upload.single("photo"), async (req, res) => {
     res.redirect("/home-page");
   }
 });
-
-
-/*router.put("/edit/:id", upload.single("photo"), async (req, res) => {
-  const {id}= req.params;
-  
-  try {
-    const b64 = Buffer.from(req.file.buffer).toString("base64");
-    let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
-
-    const cldRes = await handleUpload(dataURI);
-       await prisma.user.update({
-      where: {
-        id,
-      },
-      data: {
-        photo: cldRes.secure_url,
-      },
-    });
-
-    res.redirect("/profile-page");
-  } catch (error) {
-    console.log(error);
-    res.redirect("/home-page");
-  }
-});*/
-
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;

@@ -1,15 +1,20 @@
- <div>
-<h1>{{post.title}}</h1>
-<p>Post: {{post.content}}</p>
-<p>Creation date: {{post.createdAt}}</p>
-<p>postId: {{post.postId}}  </p> 
-<p>UserId: {{post.userId}} </p>
-<p>Photo: <img src="{{post.photo}}" alt="post-image"></a>
-<a href="/profile-page/{{post.userId}}">View User Profile </a>
-<form action="/post-page/delete/{{post.postId}}?_method=DELETE" method="post">
-<button onclick= "return confirm('Are you sure you want to delete this post?')">Delete Post</button></form>
-<a href="/post-page/update/{{post.postId}}">
-<button>Edit Post</button></a>
+<div>
+  <h1>{{post.title}}</h1>
+  <p>Post: {{post.content}}</p>
+  <p>Category: {{post.category}}</p>
+  <p>Creation date: {{post.createdAt}}</p>
+  <p>Photo: <img src="{{post.photo}}" alt="post-image"></p>
+  <a href="/profile-page/view/{{post.userId}}">View User Profile</a>
+    {{#if isPostCreator}}
+    <form action="/post-page/delete/{{post.postId}}?_method=DELETE" method="post">
+      <button onclick="return confirm('Are you sure you want to delete this post?')">Delete Post</button>
+    </form>
+    <a href="/post-page/update/{{post.postId}}">
+      <button>Edit Post</button>
+    </a>
+  {{/if}}
 </div>
+
+
 
 

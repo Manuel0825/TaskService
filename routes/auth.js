@@ -47,11 +47,11 @@ router.post("/register-page", async (req, res) => {
     });
     
     let mailOptions = {
-      from: 'TercerProyecto',
+      from: "TaskService <manuelandresvallejo@gmail.com>",
       to: req.body.email,
-      subject: 'Asunto del Email',
-      text: `Welcome ${newUser.username}`  // o puedes usar `html` para contenido HTML
-  };
+      subject: "Welcome to TaskService",
+      text: `Welcome ${newUser.email}`,
+    };
   
   transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
