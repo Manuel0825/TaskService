@@ -3,11 +3,10 @@
   <h2>Contact Info:</h2>
   <p>Email: {{user.email}}</p>
   <p>Mobile number: {{user.number}}</p>
-  <p>Photo: <img src="{{user.photo}}" alt="user-image"></p>
+  <p>Photo: <img src="{{user.photo}}" alt="user-image" style="max-width: 350px; max-height:200px"> </p>
 
   <form action="mailto:{{user.email}}" method="post" enctype="text/plain">
     <button type="submit">Send Email</button>
   </form>
 </div>
 
-</div>
