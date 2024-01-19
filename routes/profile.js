@@ -36,7 +36,7 @@ router.get('/view/:userId', async (req, res) => {
       return res.status(404).send('User not found');
     }
 
-    res.render('profileView', { title: `${user.username}'s Profile`, user });
+    res.render('profileview', { title: `${user.username}'s Profile`, user });
   } catch (error) {
     console.error('Error fetching user:', error);
     res.status(500).send('Internal Server Error');
