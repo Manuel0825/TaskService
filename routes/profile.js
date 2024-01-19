@@ -45,15 +45,21 @@ router.get('/view/:userId', async (req, res) => {
 
 router.get("/edit/:id", async (req, res) => {
   const { id } = req.params;
-  const editProfile = await prisma.user.findUnique({
-    where: {
-      id,
-    },
-  });
-  res.render("editprofile", {user: editProfile,});
+  try {
+    
+    const editProfile = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+    res.render("editprofile", {user: editProfile,});
+  } catch (error) {
+    console.log(error)
+    res.render("editprofile", {user: editProfile,});
+  }
 });
 
-router.put("/edit/:id", upload.single("photo"), async (req, res) => {
+router.put("/edit/:id", isAuthenticated,upload.single("photo"), async (req, res) => {
   try {
     if (req.body.username || req.body.number) {
       await prisma.user.update({

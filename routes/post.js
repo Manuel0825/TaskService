@@ -41,7 +41,7 @@ router.get("/create", isAuthenticated , async (req, res) => {
 
 
 
-router.post("/create", upload.single('photo'), async (req, res) => {
+router.post("/create",isAuthenticated, upload.single('photo'), async (req, res) => {
     try {
       const b64 = Buffer.from(req.file.buffer).toString("base64");
       let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
@@ -66,7 +66,7 @@ router.post("/create", upload.single('photo'), async (req, res) => {
 
 
 
-router.get("/update/:postId", async (req, res) => {
+router.get("/update/:postId", isAuthenticated,async (req, res) => {
   const { postId } = req.params;
    const updateId = await prisma.post.findUnique({
     where: {
@@ -77,7 +77,7 @@ router.get("/update/:postId", async (req, res) => {
   res.render("editForm", { title: updateId.title, post: updateId });
 });
 
-router.put("/update/:postId", upload.single('photo'), async (req, res) => {
+router.put("/update/:postId", isAuthenticated,upload.single('photo'), async (req, res) => {
   try {
     const b64 = Buffer.from(req.file.buffer).toString("base64");
     let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
@@ -114,7 +114,7 @@ router.delete('/delete/:postId', async(req, res) => {
   res.redirect('/profile-page');
 });
 
-router.get('/:postId', async (req, res) => {
+router.get('/:postId',isAuthenticated, async (req, res) => {
   try {
     const { postId } = req.params;
 
