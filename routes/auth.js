@@ -116,7 +116,7 @@ router.post(
  *         description: Returns the login page.
  */
 router.get("/login-page", (req, res) => {
-  res.render("login", { error: req.flash("error") });
+  res.render("login",{ title: "Login Page", error: req.flash("error") });
 });
 
 /**
