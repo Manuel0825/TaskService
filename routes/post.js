@@ -18,7 +18,7 @@ router.get("/filter", isAuthenticated, async (req, res) => {
   let posts;
 
   if (category) {
-    // Filter posts by category if category parameter is present
+    
     posts = await prisma.post.findMany({
       where: {
         category: {
@@ -27,7 +27,7 @@ router.get("/filter", isAuthenticated, async (req, res) => {
       },
     });
   } else {
-    // Fetch all posts if no category parameter
+   
     posts = await prisma.post.findMany({});
   }
 

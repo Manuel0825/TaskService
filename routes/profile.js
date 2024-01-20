@@ -94,35 +94,8 @@ router.put("/edit/:id", isAuthenticated,upload.single("photo"), async (req, res)
     res.redirect("/home-page");
   }
 });
-router.get("/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
 
-    const findUser = await prisma.user.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!findUser) {
-      return res.status(404).send("User not found");
-    }
-
-    const userPosts = await prisma.post.findMany({
-      where: {
-        userId: findUser.id,
-      },
-    });
-
-    res.render("profilepage", {
-      title: "User Profile",
-      user: findUser,
-      posts: userPosts,
-    });
-  } catch (error) {
-    console.error("Error fetching user or posts:", error);
-    res.status(500).send("Internal Server Error");
-  }
-});
+  
+  
 
 module.exports = router;

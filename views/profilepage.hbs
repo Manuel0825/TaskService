@@ -1,15 +1,14 @@
-
 <h1>Profile {{user.email}}</h1>
 
 
-  <p>Email: {{user.email}}</p>
+  <h2>Email: {{user.email}}</h2>
   {{#if user}}
     {{#if user.photo}}
       <img src={{user.photo}} alt="user-image" style="width: 150px; border-radius: 50px">
     {{/if}}
   {{/if}}
-  <p>Username: {{user.username}}</p>
-  <p>Mobile Number: {{user.number}}</p>
+  <h2>Username: {{user.username}}</h2>
+  <h2>Mobile Number: {{user.number}}</h2>
 
   <form action="/post-page/create" method="post" enctype="multipart/form-data">
     <label for="title">Title</label>
@@ -23,7 +22,7 @@
     <button type="submit">Create!</button>
   </form>
 
-  <p>posts :</p>
+  <h2>Posts :</h2>
  
    <div class="posts-container">
   {{#each posts}}
@@ -37,7 +36,10 @@
 </ul>
 </div>
 
-  <li><a href="profile-page/edit/{{user.id}}">Edit</a></li>
 
-  <a href="/auth/logout">Logout</a>
+ <li><a href="profile-page/edit/{{user.id}}"class="profile-page-button">Edit</a></li>
+
+  <a href="/auth/logout"class="profile-page-button">Logout</a> 
+
+  
 
