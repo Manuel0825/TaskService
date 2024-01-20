@@ -6,13 +6,13 @@
   <p>Photo: <img src="{{post.photo}}" alt="post-image"></p>
   <a href="/profile-page/view/{{post.userId}}">View User Profile</a>
 
-  <div class= >
+  <div  >
     {{#if isPostCreator}}
     <form action="/post-page/delete/{{post.postId}}?_method=DELETE" method="post">
-    <button onclick="return confirm('Are you sure you want to delete this post?')">Delete Post</button> 
+    <button onclick="return confirm('Are you sure you want to delete this post?')"class="profile-page-button">Delete Post</button> 
     </form>
     <a href="/post-page/update/{{post.postId}}">
-      <button>Edit Post</button>
+      <button class="profile-page-button"> Edit Post</button>
     </a>
   {{/if}}
   </div>
